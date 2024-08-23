@@ -7,66 +7,90 @@ mealsRouter.get("/", async (req, res) => {
   res.json({ Message: "Welcome to meal sharing App" });
 });
 
-mealsRouter.get("/future-meals", async (req, res) => {
+mealsRouter.get("/meals", async (req, res) => {
   try {
-    const meals = await knex.raw(
-      "SELECT * FROM meal WHERE `when` > NOW() ORDER BY `when` ASC"
-    );
-    res.json(meals[0]);
+    const meals = await knex.from("meal").select("*");
+    res.json(meals);
   } catch (error) {
     console.error(error);
     res.status(404).json({ error: "Request not completed" });
   }
 });
 
-mealsRouter.get("/past-meals", async (req, res) => {
+mealsRouter.post("/meals", async (req, res) => {
   try {
-    const meals = await knex.raw(
-      "SELECT * FROM meal WHERE `when` < NOW() ORDER BY `when` DESC"
-    );
-    res.json(meals[0]);
+    await knex("meal").insert([
+      {
+        title: "Dhokla",
+        description: "Gram Flour puffed and spongy cake",
+        location: "ballerup",
+        when: "2024-08-15 07:48:26",
+        max_reservations: 5,
+        price: "67.00",
+        create_date: "2024-08-12 03:45:34",
+      },
+      {
+        title: "Samosa",
+        description: "Potato stuffed triangle shaped snacks",
+        location: "ballerup",
+        when: "2024-08-31 07:48:26",
+        max_reservations: 5,
+        price: "67.00",
+        create_date: "2024-08-15 03:45:34",
+      },
+    ]);
+    res.status(201).json({ status: "Success" });
   } catch (error) {
-    console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    console.log(error);
+    res.status(404).json({ message: "request is not completed" });
   }
 });
 
-mealsRouter.get("/all-meals", async (req, res) => {
+mealsRouter.get("/meals/:id", async (req, res) => {
   try {
-    const meals = await knex.raw("SELECT * FROM meal ORDER BY id ASC");
-    res.json(meals[0]);
-  } catch (error) {
-    console.error(error);
-    res.status(404).json({ error: "Request not completed" });
-  }
-});
-
-mealsRouter.get("/first-meal", async (req, res) => {
-  try {
-    const meal = await knex.raw("SELECT * FROM meal ORDER BY id ASC LIMIT 1");
-    if (meal[0].length > 0) {
-      res.json(meal[0][0]);
+    const param = req.params.id;
+    const meal = await knex.from("meal").select("*").where("id", param);
+    if (meal.length > 0) {
+      res.json(meal);
     } else {
-      res.status(404).json({ error: "There is no meal" });
+      res.status(404).json({ id: `${param} does not exist` });
     }
   } catch (error) {
-    console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    console.log(error);
+    res.status(404).json({ massage: "Request Error" });
   }
 });
 
-mealsRouter.get("/last-meal", async (req, res) => {
+mealsRouter.put("/meals/:id", async (req, res) => {
+  const param = req.params.id;
   try {
-    const meal = await knex.raw("SELECT * FROM meal ORDER BY id DESC LIMIT 1");
-    if (meal[0].length > 0) {
-      res.json(meal[0][0]);
+    const updateMeal = await knex("meal").where({ id: param }).update({
+      title: "Jalebi",
+      description: "Circular sweet dipped in the sugar syrup",
+    });
+    if (updateMeal > 0) {
+      res.status(200).json({ status: "Successfully updated" });
     } else {
-      res.status(404).json({ error: "There is no meal" });
+      res.status(404).json({ message: "Id does not exist" });
     }
-    res.json(meal[0][0]);
   } catch (error) {
-    console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    console.log(error);
+    res.status(404).json({ message: "Error in updation" });
+  }
+});
+
+mealsRouter.delete("/meals/:id", async (req, res) => {
+  const param = req.params.id;
+  try {
+    const deleteMeal = await knex("meal").where({ id: param }).del();
+    if (deleteMeal > 0) {
+      res.status(200).json({ status: `The meal with id ${param} is deleted` });
+    } else {
+      res.status(404).json({ message: `id ${param} does not exist` });
+    }
+  } catch (error) {
+    console.log(error),
+      res.status(404).json({ message: `Couldn't process the request` });
   }
 });
 
