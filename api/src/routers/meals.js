@@ -17,8 +17,9 @@ mealsRouter.get("/meals", async (req, res, next) => {
       console.error(error);
       res.status(404).json({ error: "Request not completed" });
     }
+  } else {
+    next();
   }
-  next();
 });
 
 mealsRouter.post("/meals", async (req, res) => {
