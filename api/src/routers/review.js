@@ -1,6 +1,5 @@
 import express from "express";
 import knex from "../database_client.js";
-import { Timestamp } from "mongodb";
 
 const reviewRouter = express.Router();
 
