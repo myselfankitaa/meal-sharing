@@ -15,7 +15,7 @@ router_meal.get("/future-meals", async (req, res) => {
     res.json(meals[0]);
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -27,7 +27,7 @@ router_meal.get("/past-meals", async (req, res) => {
     res.json(meals[0]);
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -37,7 +37,7 @@ router_meal.get("/all-meals", async (req, res) => {
     res.json(meals[0]);
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -51,7 +51,7 @@ router_meal.get("/first-meal", async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -66,7 +66,7 @@ router_meal.get("/last-meal", async (req, res) => {
     res.json(meal[0][0]);
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: "Request not completed" });
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
