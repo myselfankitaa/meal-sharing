@@ -7,6 +7,7 @@ import nestedRouter from "./routers/nested.js";
 import mealsRouter from "./routers/meals.js";
 import router_meal from "./routers/meals_week1.js";
 import reservationRouter from "./routers/reservations.js";
+import reviewRouter from "./routers/review.js";
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,7 @@ apiRouter.use("/nested", nestedRouter);
 apiRouter.use("/week1", router_meal);
 apiRouter.use(mealsRouter);
 apiRouter.use(reservationRouter);
+apiRouter.use(reviewRouter);
 
 app.use("/api", apiRouter);
 
