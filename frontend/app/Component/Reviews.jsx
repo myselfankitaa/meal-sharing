@@ -22,7 +22,7 @@ export default function MealReviews({ id }) {
 
   useEffect(() => {
     const handleFetchReviews = async () => {
-      if (showReviews) return; // Avoid re-fetching if already showing reviews
+      if (showReviews) return;
       setLoading(true);
       try {
         const response = await fetch(

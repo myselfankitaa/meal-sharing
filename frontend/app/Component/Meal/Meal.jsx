@@ -3,7 +3,6 @@ import Image from "next/image";
 import {
   Box,
   Card,
-  CardMedia,
   CardContent,
   Typography,
   CardActions,
@@ -29,10 +28,14 @@ const Meal = ({ meal }) => {
           <Image
             src={`/images/${meal.image_url}.png`}
             alt={meal.title}
-            width={500}
+            width={400}
             height={300}
           />
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ display: "flex", flexWrap: "wrap" }}
+          >
             {meal.description}
           </Typography>
           <Typography

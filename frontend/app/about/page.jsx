@@ -8,7 +8,7 @@ export default function AboutUs() {
         background: "url('/about.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "100vh",
+        height: "90vh",
         width: "100vw",
         position: "relative",
         display: "flex",
@@ -22,7 +22,7 @@ export default function AboutUs() {
         sx={{
           position: "absolute",
           top: "20px",
-          right: "900px",
+          right: "80px",
           fontWeight: "bold",
           color: "#B58E24",
           textShadow: "2px 2px 5px rgba(0, 0, 0, 0.7)",
@@ -35,11 +35,11 @@ export default function AboutUs() {
         variant="body1"
         sx={{
           position: "absolute",
-          top: "200px",
+          top: "100px",
           right: "80px",
           color: "#B58E24",
-          maxWidth: "900px",
-          fontSize: { xs: "1rem", md: "1.25rem" },
+          maxWidth: "600px",
+          fontSize: { xs: "1rem", md: "1.15rem" },
 
           lineHeight: 1.6,
         }}
@@ -51,11 +51,11 @@ export default function AboutUs() {
         variant="body1"
         sx={{
           position: "absolute",
-          top: "300px",
+          top: "200px",
           right: "80px",
           color: "#B58E24",
-          maxWidth: "900px",
-          fontSize: { xs: "1rem", md: "1.25rem" },
+          maxWidth: "600px",
+          fontSize: { xs: "1rem", md: "1.15rem" },
 
           lineHeight: 1.6,
         }}
@@ -68,11 +68,11 @@ export default function AboutUs() {
         variant="body1"
         sx={{
           position: "absolute",
-          top: "400px",
+          top: "350px",
           right: "80px",
           color: "#B58E24",
-          maxWidth: "900px",
-          fontSize: { xs: "1rem", md: "1.25rem" },
+          maxWidth: "600px",
+          fontSize: { xs: "1rem", md: "1.15rem" },
 
           lineHeight: 1.6,
         }}
@@ -85,11 +85,11 @@ export default function AboutUs() {
         variant="body1"
         sx={{
           position: "absolute",
-          top: "500px",
+          top: "450px",
           right: "80px",
           color: "#B58E24",
-          maxWidth: "900px",
-          fontSize: { xs: "1rem", md: "1.25rem" },
+          maxWidth: "600px",
+          fontSize: { xs: "1rem", md: "1.15rem" },
 
           lineHeight: 1.6,
         }}

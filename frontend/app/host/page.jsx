@@ -146,136 +146,150 @@ export default function Host() {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit}
       sx={{
+        background: "url('/meal.sharing.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "90vh",
+        width: "100vw",
+        position: "relative",
         display: "flex",
-        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
-        maxWidth: "500px",
-        margin: "0 auto",
-        padding: "2rem",
-        border: "1px solid #ccc",
-        borderRadius: "8px",
-        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-        backgroundColor: "#f9f9f9",
       }}
     >
-      <Typography variant="h3" gutterBottom>
-        Be the Host
-      </Typography>
-      <Typography variant="h6" gutterBottom>
-        Post your meal
-      </Typography>
-
-      <TextField
-        required
-        label="Meal Title"
-        variant="outlined"
-        inputRef={titleRef}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e, descriptionRef)}
-      />
-      {formError.titleError && (
-        <p style={{ color: "red" }}>{formError.titleError}</p>
-      )}
-
-      <TextField
-        required
-        label="Meal Description"
-        variant="outlined"
-        inputRef={descriptionRef}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e, locationRef)}
-      />
-      {formError.descriptionError && (
-        <p style={{ color: "red" }}>{formError.descriptionError}</p>
-      )}
-
-      <TextField
-        required
-        label="Location"
-        variant="outlined"
-        inputRef={locationRef}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e, hostingDateRef)}
-      />
-      {formError.locationError && (
-        <p style={{ color: "red" }}>{formError.locationError}</p>
-      )}
-
-      <TextField
-        required
-        type="date"
-        variant="outlined"
-        inputRef={hostingDateRef}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        value={hostingDate}
-        onChange={(e) => setHostingDate(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e, maxReservationRef)}
-      />
-      {formError.hostingDateError && (
-        <p style={{ color: "red" }}>{formError.hostingDateError}</p>
-      )}
-
-      <TextField
-        required
-        id="max_reservation"
-        label="Maximum Reservation (<=10)"
-        variant="outlined"
-        value={maxReservation}
-        inputRef={maxReservationRef}
-        onChange={(e) => setMaxReservation(e.target.value)}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        onKeyDown={(e) => handleKeyDown(e, priceRef)}
-      />
-      {formError.maxReservationError && (
-        <p style={{ color: "red" }}>{formError.maxReservationError}</p>
-      )}
-
-      <TextField
-        required
-        id="price"
-        label="Price"
-        variant="outlined"
-        inputRef={priceRef}
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        onKeyDown={(e) => handleKeyDown(e, createDateRef)}
-      />
-      {formError.priceError && (
-        <p style={{ color: "red" }}>{formError.priceError}</p>
-      )}
-
-      <TextField
-        required
-        type="date"
-        variant="outlined"
-        inputRef={createDateRef}
-        sx={{ marginBottom: "1rem", width: "100%" }}
-        value={createDate}
-        onChange={(e) => setCreateDate(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e, titleRef)}
-      />
-      {formError.createDateError && (
-        <p style={{ color: "red" }}>{formError.createDateError}</p>
-      )}
-
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        sx={{ marginTop: "1rem" }}
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          maxWidth: "500px",
+          margin: "0 auto",
+          padding: "2rem",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#f9f9f9",
+        }}
       >
-        Post Meal
-      </Button>
+        <Typography variant="h4" gutterBottom>
+          "BE A HOST"
+        </Typography>
+        <Typography variant="h8" gutterBottom>
+          Post your meal
+        </Typography>
+
+        <TextField
+          required
+          label="Meal Title"
+          variant="outlined"
+          inputRef={titleRef}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e, descriptionRef)}
+        />
+        {formError.titleError && (
+          <p style={{ color: "red" }}>{formError.titleError}</p>
+        )}
+
+        <TextField
+          required
+          label="Meal Description"
+          variant="outlined"
+          inputRef={descriptionRef}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e, locationRef)}
+        />
+        {formError.descriptionError && (
+          <p style={{ color: "red" }}>{formError.descriptionError}</p>
+        )}
+
+        <TextField
+          required
+          label="Location"
+          variant="outlined"
+          inputRef={locationRef}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e, hostingDateRef)}
+        />
+        {formError.locationError && (
+          <p style={{ color: "red" }}>{formError.locationError}</p>
+        )}
+
+        <TextField
+          required
+          type="date"
+          variant="outlined"
+          inputRef={hostingDateRef}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          value={hostingDate}
+          onChange={(e) => setHostingDate(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e, maxReservationRef)}
+        />
+        {formError.hostingDateError && (
+          <p style={{ color: "red" }}>{formError.hostingDateError}</p>
+        )}
+
+        <TextField
+          required
+          id="max_reservation"
+          label="Max Reservation (<=10)"
+          variant="outlined"
+          value={maxReservation}
+          inputRef={maxReservationRef}
+          onChange={(e) => setMaxReservation(e.target.value)}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          onKeyDown={(e) => handleKeyDown(e, priceRef)}
+        />
+        {formError.maxReservationError && (
+          <p style={{ color: "red" }}>{formError.maxReservationError}</p>
+        )}
+
+        <TextField
+          required
+          id="price"
+          label="Price"
+          variant="outlined"
+          inputRef={priceRef}
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          onKeyDown={(e) => handleKeyDown(e, createDateRef)}
+        />
+        {formError.priceError && (
+          <p style={{ color: "red" }}>{formError.priceError}</p>
+        )}
+
+        <TextField
+          required
+          type="date"
+          variant="outlined"
+          inputRef={createDateRef}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          value={createDate}
+          onChange={(e) => setCreateDate(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e, titleRef)}
+        />
+        {formError.createDateError && (
+          <p style={{ color: "red" }}>{formError.createDateError}</p>
+        )}
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ marginTop: "1rem" }}
+        >
+          Post Meal
+        </Button>
+      </Box>
     </Box>
   );
 }
