@@ -15,28 +15,50 @@ reservationRouter.get("/reservations", async (req, res) => {
 
 reservationRouter.post("/reservations", async (req, res) => {
   try {
-    await knex("reservation").insert([
-      {
-        number_of_guest: 5,
-        meal_id: 12,
-        create_date: "2024-08-12 13:04:35",
-        contact_number: "438-295-486",
-        contact_name: "Eda",
-        contact_email: "eda@welcome.dk",
-      },
-      {
-        number_of_guest: 4,
-        meal_id: 14,
-        create_date: "2024-08-16 16:45:37",
-        contact_number: "488-455-294",
-        contact_name: "Simona",
-        contact_email: "sim@hello.dk",
-      },
-    ]);
-    res.status(201).json({ status: "Successfully updated reservation" });
+    // Destructure the incoming reservation data
+    const {
+      number_of_guest,
+      meal_id,
+      create_date,
+      contact_number,
+      contact_name,
+      contact_email,
+    } = req.body;
+
+    if (
+      !number_of_guest ||
+      !meal_id ||
+      !create_date ||
+      !contact_number ||
+      !contact_name ||
+      !contact_email
+    ) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    // Create a reservation object
+    const newReservation = {
+      number_of_guest,
+      meal_id,
+      create_date,
+      contact_number,
+      contact_name,
+      contact_email,
+    };
+
+    // Insert the reservation into the database
+    await knex("reservation").insert(newReservation); // Make sure the table name matches your database schema
+
+    // Respond with a success message and the inserted reservation data
+    res.status(201).json({
+      message: "Reservation created successfully",
+      data: newReservation,
+    });
   } catch (error) {
-    console.log(error);
-    res.status(404).json({ message: "request can not be processed" });
+    console.error("Error inserting reservation:", error);
+    res
+      .status(500)
+      .json({ message: "Request cannot be processed", error: error.message });
   }
 });
 

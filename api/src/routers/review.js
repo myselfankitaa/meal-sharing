@@ -34,28 +34,22 @@ reviewRouter.get("/meals/:meal_id/reviews", async (req, res) => {
 
 reviewRouter.post("/reviews", async (req, res) => {
   try {
-    const reviews = [
-      {
-        title: "Just Wow",
-        description: "Very delicious",
-        meal_id: 3,
-        stars: 4,
-        create_date: new Date(),
-      },
-      {
-        title: "Super delicious",
-        description:
-          "This is a very delicious and must-try dish. Don't lose the chance.",
-        meal_id: 7,
-        stars: 5,
-        create_date: new Date(),
-      },
-    ];
+    const { title, description, meal_id, stars, create_date } = req.body;
 
-    await knex("review").insert(reviews);
-    res.status(201).json({ status: "Successfully updated reviews" });
+    const newReview = {
+      title,
+      description,
+      meal_id,
+      stars,
+      create_date: create_date || new Date(),
+    };
+
+    await knex("review").insert(newReview);
+    res
+      .status(201)
+      .json({ status: "Review successfully posted", review: newReview });
   } catch (error) {
-    console.error(error); // Logging the error for debugging
+    console.error(error);
     res
       .status(500)
       .json({ message: "Request cannot be processed", error: error.message });
