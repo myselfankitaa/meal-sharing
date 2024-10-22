@@ -14,6 +14,7 @@ export default function Host() {
   const [maxReservation, setMaxReservation] = useState("");
   const [price, setPrice] = useState("");
   const [createDate, setCreateDate] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const [formError, setFormError] = useState({
     titleError: "",
@@ -23,6 +24,7 @@ export default function Host() {
     maxReservationError: "",
     priceError: "",
     createDateError: "",
+    imageUrlError: "",
   });
 
   const titleRef = useRef(null);
@@ -32,6 +34,7 @@ export default function Host() {
   const maxReservationRef = useRef(null);
   const priceRef = useRef(null);
   const createDateRef = useRef(null);
+  const imageUrlRef = useRef(null);
 
   const handleKeyDown = (event, nextFieldRef) => {
     if (event.key === "Enter") {
@@ -48,6 +51,7 @@ export default function Host() {
     const maxReservation = maxReservationRef.current.value;
     const price = priceRef.current.value;
     const createDate = createDateRef.current.value;
+    const imageUrl = imageUrlRef.current.value;
 
     let titleError = "";
     let descriptionError = "";
@@ -56,6 +60,7 @@ export default function Host() {
     let maxReservationError = "";
     let priceError = "";
     let createDateError = "";
+    let imageUrlError = "";
 
     let isValid = true;
 
@@ -95,6 +100,11 @@ export default function Host() {
       isValid = false;
     }
 
+    if (imageUrl.trim() === "") {
+      imageUrlError = "Provide a valid image URL";
+      isValid = false;
+    }
+
     setFormError({
       titleError,
       descriptionError,
@@ -103,6 +113,7 @@ export default function Host() {
       maxReservationError,
       priceError,
       createDateError,
+      imageUrlError,
     });
     return isValid;
   };
@@ -120,7 +131,7 @@ export default function Host() {
       max_reservations: maxReservation,
       price: price,
       create_date: createDate,
-      image_url: title,
+      image_url: imageUrl,
     };
 
     try {
@@ -133,9 +144,9 @@ export default function Host() {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("Meal Posting successful:", data);
+        alert("Meal Posting successful:", data);
 
-        router.push("/host");
+        router.push("/");
       } else {
         console.error("Meal Posting Fail:", response.statusText);
       }
@@ -275,10 +286,24 @@ export default function Host() {
           sx={{ marginBottom: "1rem", width: "100%" }}
           value={createDate}
           onChange={(e) => setCreateDate(e.target.value)}
-          onKeyDown={(e) => handleKeyDown(e, titleRef)}
+          onKeyDown={(e) => handleKeyDown(e, imageUrlRef)}
         />
         {formError.createDateError && (
           <p style={{ color: "red" }}>{formError.createDateError}</p>
+        )}
+
+        <TextField
+          required
+          label="Image URL"
+          variant="outlined"
+          inputRef={imageUrlRef}
+          sx={{ marginBottom: "1rem", width: "100%" }}
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+          onKeyDown={(e) => handleKeyDown(e, titleRef)}
+        />
+        {formError.imageUrlError && (
+          <p style={{ color: "red" }}>{formError.imageUrlError}</p>
         )}
 
         <Button

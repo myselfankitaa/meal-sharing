@@ -26,7 +26,7 @@ const Meal = ({ meal }) => {
             </Typography>
           </span>
           <Image
-            src={`/images/${meal.image_url}.png`}
+            src={meal.image_url || "/Home_Image.webp"}
             alt={meal.title}
             width={400}
             height={300}
@@ -34,7 +34,12 @@ const Meal = ({ meal }) => {
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ display: "flex", flexWrap: "wrap" }}
+            sx={{
+              display: "block",
+              whiteSpace: "normal",
+              overflowWrap: "break-word",
+              marginTop: 1,
+            }}
           >
             {meal.description}
           </Typography>

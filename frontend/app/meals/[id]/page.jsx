@@ -93,7 +93,7 @@ export default function MealPage({ params }) {
               sx={{ borderRadius: 2, overflow: "hidden" }}
             >
               <Image
-                src={`/images/${meal.image_url}.png` || `/images/salad-box.png`}
+                src={meal.image_url}
                 alt={meal.title}
                 width={400}
                 height={250}

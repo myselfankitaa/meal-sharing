@@ -123,15 +123,19 @@ export default function MealsList() {
       <Box
         display="flex"
         flexWrap="wrap"
-        justifyContent="space-around"
+        justifyContent="center"
         gap={4}
-        sx={{
-          width: "100%",
-          padding: 2,
-        }}
+        sx={{ width: "100%", padding: 2 }}
       >
         {meals.length > 0 ? (
-          meals.map((meal) => <Meal key={meal.id} meal={meal} />)
+          meals.map((meal) => (
+            <Box
+              key={meal.id}
+              sx={{ width: { xs: "100%", sm: "45%", md: "30%" } }}
+            >
+              <Meal meal={meal} />
+            </Box>
+          ))
         ) : (
           <Typography variant="body1" color="text.secondary">
             No meals available

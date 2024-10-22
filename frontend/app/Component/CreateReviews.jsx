@@ -90,7 +90,7 @@ export default function CreateReviews({ id }) {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Review Posted:", data);
+          alert("Review Posted:", data);
 
           router.push("/meals");
         } else {
