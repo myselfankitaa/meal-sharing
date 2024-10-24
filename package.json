@@ -4,7 +4,11 @@
   "description": "<img src=\"./images/hyf.svg\" alt=\"image\" width=\"200px\" height=\"200px\">",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run dev --prefix api\" \"npm run dev --prefix frontend\""
+    "dev": "concurrently \"npm run dev --prefix api\" \"npm run dev --prefix frontend\"",
+    "build": "cd frontend && next build",
+    "start": "npm run start-api && npm run start-frontend",
+    "start-api": "cd api && npm run start",
+    "start-frontend": "cd frontend && next start"
   },
   "keywords": [],
   "author": "",
