@@ -24,45 +24,77 @@ mealsRouter.get("/meals", async (req, res, next) => {
 
 mealsRouter.post("/meals", async (req, res) => {
   try {
-    await knex("meal").insert([
-      {
-        title: "Dhokla",
-        description: "Gram Flour puffed and spongy cake",
-        location: "ballerup",
-        when: "2024-08-15 07:48:26",
-        max_reservations: 5,
-        price: "67.00",
-        create_date: "2024-08-12 03:45:34",
-      },
-      {
-        title: "Samosa",
-        description: "Potato stuffed triangle shaped snacks",
-        location: "ballerup",
-        when: "2024-08-31 07:48:26",
-        max_reservations: 5,
-        price: "67.00",
-        create_date: "2024-08-15 03:45:34",
-      },
-    ]);
-    res.status(201).json({ status: "Success" });
+    const newMeal = req.body;
+    await knex("meal").insert(newMeal);
+    res.status(201).json({ status: "Success", meal: newMeal });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: "request is not completed" });
+    res.status(400).json({ message: "Request failed", error });
   }
 });
 
+// mealsRouter.post("/meals", async (req, res) => {
+//   try {
+//     await knex("meal").insert([
+//       {
+//         title: "Dhokla",
+//         description: "Gram Flour puffed and spongy cake",
+//         location: "ballerup",
+//         when: "2024-08-15 07:48:26",
+//         max_reservations: 5,
+//         price: "67.00",
+//         create_date: "2024-08-12 03:45:34",
+//       },
+//       {
+//         title: "Samosa",
+//         description: "Potato stuffed triangle shaped snacks",
+//         location: "ballerup",
+//         when: "2024-08-31 07:48:26",
+//         max_reservations: 5,
+//         price: "67.00",
+//         create_date: "2024-08-15 03:45:34",
+//       },
+//     ]);
+//     res.status(201).json({ status: "Success" });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).json({ message: "request is not completed" });
+//   }
+// });
+
 mealsRouter.get("/meals/:id", async (req, res) => {
+  const { id } = req.params;
+
   try {
-    const param = req.params.id;
-    const meal = await knex.from("meal").select("*").where("id", param);
-    if (meal.length > 0) {
-      res.json(meal);
-    } else {
-      res.status(404).json({ id: `${param} does not exist` });
+    const meal = await knex("meal")
+      .leftJoin("reservation", "meal.id", "reservation.meal_id")
+      .select(
+        "meal.id",
+        "meal.title",
+        "meal.description",
+        "meal.location",
+        "meal.when",
+        "meal.max_reservations",
+        "meal.price",
+        "meal.create_date",
+        "meal.image_url",
+        knex.raw(
+          "meal.max_reservations - COALESCE(SUM(reservation.number_of_guest), 0) AS available_spots"
+        )
+      )
+      .where("meal.id", id)
+      .groupBy("meal.id");
+
+    if (!meal || meal.length === 0) {
+      return res.status(404).json({ error: "Meal not found" });
     }
+
+    res.json(meal);
   } catch (error) {
-    console.log(error);
-    res.status(404).json({ massage: "Request Error" });
+    console.error("Error fetching meal:", error);
+    res
+      .status(500)
+      .json({ error: "An internal error occurred while fetching the meal" });
   }
 });
 
@@ -106,7 +138,7 @@ mealsRouter.get("/meals", async (req, res) => {
     title,
     dateAfter,
     dateBefore,
-    limit = 10,
+    limit = 100,
     sortKey = "id",
     sortDir = "asc",
   } = req.query;
@@ -114,6 +146,7 @@ mealsRouter.get("/meals", async (req, res) => {
   try {
     let query = knex
       .from("meal")
+      .leftJoin("reservation", "meal.id", "reservation.meal_id")
       .select(
         "meal.id",
         "meal.title",
@@ -122,8 +155,13 @@ mealsRouter.get("/meals", async (req, res) => {
         "meal.when",
         "meal.max_reservations",
         "meal.price",
-        "meal.create_date"
-      );
+        "meal.create_date",
+        "meal.image_url",
+        knex.raw(
+          "meal.max_reservations - COALESCE(SUM(reservation.number_of_guest), 0) AS available_spots"
+        )
+      )
+      .groupBy("meal.id");
 
     if (maxPrice) {
       const maxPriceNum = Number(maxPrice);
@@ -191,7 +229,7 @@ mealsRouter.get("/meals", async (req, res) => {
     }
 
     if (sortKey) {
-      const sortField = ["when", "max_reservations", "price"];
+      const sortField = ["when", "available_spots", "price"];
       if (sortDir === "desc") {
         ("desc");
       } else {
