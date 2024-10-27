@@ -186,7 +186,7 @@ export default function Host() {
         }}
       >
         <Typography variant="h4" gutterBottom>
-          "BE A HOST"
+          &quot;BE A HOST&quot;
         </Typography>
         <Typography variant="h8" gutterBottom>
           Post your meal

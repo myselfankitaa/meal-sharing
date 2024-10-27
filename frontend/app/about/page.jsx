@@ -77,7 +77,7 @@ export default function AboutUs() {
           lineHeight: 1.6,
         }}
       >
-        Whether you're a seasoned chef or just love trying new recipes, we
+        Whether you are a seasoned chef or just love trying new recipes, we
         invite you to join our community. You can host your own meals, meet new
         people, and experience the joy of sharing a table with others.
       </Typography>
